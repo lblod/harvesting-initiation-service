@@ -1,7 +1,7 @@
 {
   "name": "harvesting-initiation-service",
   "version": "0.1.0",
-  "description": "",
+  "description": "Microservice providing an API for external parties to automatically process a submission.",
   "dependencies": {
     "@lblod/mu-auth-sudo": "^0.2.0",
     "cron": "^1.8.2",
