@@ -1,35 +1,40 @@
 import { app, errorHandler } from 'mu';
-import {createTask} from "./rdflib";
+import { CronJob } from 'cron';
+import rp from 'request-promise';
+
+import {createTask, getPublications} from "./rdflib";
+
+/** Schedule export cron job */
+const cronFrequency = process.env.INITIATE_HARVEST_CRON_PATTERN || '0 0 */2 * * *';
+new CronJob(cronFrequency, function() {
+  console.log(`Harvest initiated by cron job at ${new Date().toISOString()}`);
+  rp.post('http://localhost/initiate-harvest');
+}, null, true);
 
 app.get('/', function( req, res ) {
   res.send('Hello harvesting-initiation-service');
 });
 
-app.get('/initiate', async function(req, res){
+app.post('/initiate-harvest', async function(req, res){
   try{
-    initiateHarvest();
-    res.status(200).send().end();
+    initiateHarvest(); // don't await this call since the export is executed asynchronously
+    res.status(202).send().end();
   }catch (e) {
+    console.log('WARNING: something went wrong while initiating the harvest.');
     console.error(e);
-    res.status(400).send().end();
+    res.status(400).send(e.message).end();
   }
 
 });
 
 async function initiateHarvest() {
- console.log("-- initiating harvest --")
+  console.log("Start retrieval of publication root locations")
  const publications = await getPublications();
-
- console.log("-- creating tasks --")
+ console.log('Start creation of harvesting tasks');
  for(let publication of publications) {
    await createTask(publication);
+   console.log(`Created harvesting task for <${publication}>`);
  }
-}
-
-async function getPublications() {
-  return [
-    'https://publicatie.gelinkt-notuleren.vlaanderen.be/Genk/Gemeente'
-  ]
 }
 
 app.use(errorHandler);

@@ -13,6 +13,8 @@ const COLLECTION_NOT_STARTED_STATUS = 'http://lblod.data.gift/collecting-statuse
 const REMOTE_URI_BASE = 'http://data.lblod.info/id/remote-data-objects/';
 const REMOTE_READY_STATUS = 'http://lblod.data.gift/file-download-statuses/ready-to-be-cached';
 
+const PUBLICATIONS_BASE = 'https://publicatie.gelinkt-notuleren.vlaanderen.be';
+
 // TODO add all prefixes
 const PREFIXES = `
   PREFIX harvesting: <http://lblod.data.gift/vocabularies/harvesting/>
@@ -24,6 +26,7 @@ const PREFIXES = `
   PREFIX nie: <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#>
   PREFIX rpioHttp: <http://redpencil.data.gift/vocabularies/http/>
   PREFIX http: <http://www.w3.org/2011/http#>
+  PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
 `;
 
 export async function createTask(location) {
@@ -77,5 +80,26 @@ export async function createTask(location) {
     }                      
   }
   `);
+}
 
+export async function getPublications() {
+  let publications = [];
+
+  const result = await query(`
+  ${PREFIXES}
+  
+  SELECT ?blabel ?clabel
+  WHERE {
+    ?bestuurseenheid a besluit:Bestuurseenheid ;
+        <http://www.w3.org/2004/02/skos/core#prefLabel> ?blabel;
+        <http://data.vlaanderen.be/ns/besluit#classificatie> ?classificatie .
+    ?classificatie <http://www.w3.org/2004/02/skos/core#prefLabel> ?clabel .
+  }`);
+
+  if (result.results.bindings.length > 0) {
+    publications = result.results.bindings.map(binding => {
+      return `${PUBLICATIONS_BASE}/${encodeURI(binding['blabel'].value)}/${encodeURI(binding['clabel'].value)}`
+    })
+  }
+  return publications;
 }
