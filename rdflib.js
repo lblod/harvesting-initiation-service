@@ -27,6 +27,7 @@ const PREFIXES = `
   PREFIX rpioHttp: <http://redpencil.data.gift/vocabularies/http/>
   PREFIX http: <http://www.w3.org/2011/http#>
   PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 `;
 
 export async function createTask(location) {
@@ -91,9 +92,9 @@ export async function getPublications() {
   SELECT ?blabel ?clabel
   WHERE {
     ?bestuurseenheid a besluit:Bestuurseenheid ;
-        <http://www.w3.org/2004/02/skos/core#prefLabel> ?blabel;
-        <http://data.vlaanderen.be/ns/besluit#classificatie> ?classificatie .
-    ?classificatie <http://www.w3.org/2004/02/skos/core#prefLabel> ?clabel .
+        skos:prefLabel ?blabel;
+        besluit:classificatie ?classificatie .
+    ?classificatie skos:prefLabel ?clabel .
   }`);
 
   if (result.results.bindings.length > 0) {
