@@ -1,7 +1,6 @@
 import {uuid, sparqlEscapeUri, sparqlEscapeString, sparqlEscapeDateTime} from 'mu';
 import {querySudo as query, updateSudo as update} from '@lblod/mu-auth-sudo';
 
-// TODO add constants
 const CREATOR = 'http://lblod.data.gift/services/harvesting-initiation-service';
 
 const TASK_URI_BASE = 'http://data.lblod.info/id/harvesting-task/';
@@ -15,7 +14,6 @@ const REMOTE_READY_STATUS = 'http://lblod.data.gift/file-download-statuses/ready
 
 const PUBLICATIONS_BASE = 'https://publicatie.gelinkt-notuleren.vlaanderen.be';
 
-// TODO add all prefixes
 const PREFIXES = `
   PREFIX harvesting: <http://lblod.data.gift/vocabularies/harvesting/>
   PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
@@ -95,6 +93,10 @@ export async function getPublications() {
         skos:prefLabel ?blabel;
         besluit:classificatie ?classificatie .
     ?classificatie skos:prefLabel ?clabel .
+    
+    FILTER( ?classificatie IN (
+        <http://data.vlaanderen.be/id/concept/BestuurseenheidClassificatieCode/5ab0e9b8a3b2ca7c5e000001>,
+        <http://data.vlaanderen.be/id/concept/BestuurseenheidClassificatieCode/5ab0e9b8a3b2ca7c5e000002>))
   }`);
 
   if (result.results.bindings.length > 0) {
