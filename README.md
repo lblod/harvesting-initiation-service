@@ -20,6 +20,8 @@ services:
 
  - INITIATE_HARVEST_CRON_PATTERN: cron pattern to configure the frequency of the cron job. 
    The pattern follows the format as specified in node-cron. Defaults to 0 0 */2 * * *, run every 2 hours.
+ - PUBLICATIONS_BASE: base url that should be used in the construction of to harvesting-task.
+   Default to `https://publicatie.gelinkt-notuleren.vlaanderen.be` 
    
 ## REST API
 

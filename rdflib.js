@@ -12,7 +12,7 @@ const COLLECTION_NOT_STARTED_STATUS = 'http://lblod.data.gift/collecting-statuse
 const REMOTE_URI_BASE = 'http://data.lblod.info/id/remote-data-objects/';
 const REMOTE_READY_STATUS = 'http://lblod.data.gift/file-download-statuses/ready-to-be-cached';
 
-const PUBLICATIONS_BASE = 'https://publicatie.gelinkt-notuleren.vlaanderen.be';
+const PUBLICATIONS_BASE = process.env.PUBLICATIONS_BASE || 'https://publicatie.gelinkt-notuleren.vlaanderen.be';
 
 const PREFIXES = `
   PREFIX harvesting: <http://lblod.data.gift/vocabularies/harvesting/>
