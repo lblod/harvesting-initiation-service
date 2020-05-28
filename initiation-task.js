@@ -1,3 +1,4 @@
+import fs from 'fs-extra';
 import {uuid, sparqlEscapeUri, sparqlEscapeString, sparqlEscapeDateTime} from 'mu';
 import {querySudo as query, updateSudo as update} from '@lblod/mu-auth-sudo';
 
@@ -11,8 +12,6 @@ const COLLECTION_NOT_STARTED_STATUS = 'http://lblod.data.gift/collecting-statuse
 
 const REMOTE_URI_BASE = 'http://data.lblod.info/id/remote-data-objects/';
 const REMOTE_READY_STATUS = 'http://lblod.data.gift/file-download-statuses/ready-to-be-cached';
-
-const PUBLICATIONS_BASE = process.env.PUBLICATIONS_BASE || 'https://publicatie.gelinkt-notuleren.vlaanderen.be';
 
 const PREFIXES = `
   PREFIX harvesting: <http://lblod.data.gift/vocabularies/harvesting/>
@@ -82,27 +81,6 @@ export async function createTask(location) {
 }
 
 export async function getPublications() {
-  let publications = [];
-
-  const result = await query(`
-  ${PREFIXES}
-  
-  SELECT ?blabel ?clabel
-  WHERE {
-    ?bestuurseenheid a besluit:Bestuurseenheid ;
-        skos:prefLabel ?blabel;
-        besluit:classificatie ?classificatie .
-    ?classificatie skos:prefLabel ?clabel .
-    
-    FILTER( ?classificatie IN (
-        <http://data.vlaanderen.be/id/concept/BestuurseenheidClassificatieCode/5ab0e9b8a3b2ca7c5e000001>,
-        <http://data.vlaanderen.be/id/concept/BestuurseenheidClassificatieCode/5ab0e9b8a3b2ca7c5e000002>))
-  }`);
-
-  if (result.results.bindings.length > 0) {
-    publications = result.results.bindings.map(binding => {
-      return `${PUBLICATIONS_BASE}/${encodeURI(binding['blabel'].value)}/${encodeURI(binding['clabel'].value)}`
-    })
-  }
-  return publications;
+  const config = JSON.parse(fs.readFileSync(`/config/initiator.json`));
+  return config.publications;
 }

@@ -2,7 +2,7 @@ import {app, errorHandler} from 'mu';
 import {CronJob} from 'cron';
 import rp from 'request-promise';
 
-import {createTask, getPublications} from "./rdflib";
+import {createTask, getPublications} from "./initiation-task";
 
 /** Schedule export cron job */
 const cronFrequency = process.env.INITIATE_HARVEST_CRON_PATTERN || '0 0 */2 * * *';

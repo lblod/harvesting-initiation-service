@@ -5,7 +5,8 @@
   "dependencies": {
     "@lblod/mu-auth-sudo": "^0.2.0",
     "cron": "^1.8.2",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "fs-extra": "9.0.0"
   },
   "devDependencies": {},
   "scripts": {
