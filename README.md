@@ -27,7 +27,7 @@ contains the list of pages urls that need to be processed:
     "https://example.be/publication"
   ]
 }
-``
+```
 
 ### Environment variables
 
