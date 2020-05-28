@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import {uuid, sparqlEscapeUri, sparqlEscapeString, sparqlEscapeDateTime} from 'mu';
-import {querySudo as query, updateSudo as update} from '@lblod/mu-auth-sudo';
+import {updateSudo as update} from '@lblod/mu-auth-sudo';
 
 const CREATOR = 'http://lblod.data.gift/services/harvesting-initiation-service';
 
@@ -80,7 +80,7 @@ export async function createTask(location) {
   `);
 }
 
-export async function getPublications() {
+export async function getPagesToHarvest() {
   const config = JSON.parse(fs.readFileSync(`/config/initiator.json`));
-  return config.publications;
+  return config.pages;
 }

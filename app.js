@@ -2,7 +2,7 @@ import {app, errorHandler} from 'mu';
 import {CronJob} from 'cron';
 import rp from 'request-promise';
 
-import {createTask, getPublications} from "./initiation-task";
+import {createTask, getPagesToHarvest} from "./initiation-task";
 
 /** Schedule export cron job */
 const cronFrequency = process.env.INITIATE_HARVEST_CRON_PATTERN || '0 0 */2 * * *';
@@ -28,12 +28,11 @@ app.post('/initiate-harvest', async function (req, res) {
 });
 
 async function initiateHarvest() {
-  console.log("Start retrieval of publication root locations")
-  const publications = await getPublications();
+  const pages = await getPagesToHarvest();
   console.log('START creation of harvesting tasks');
-  for (let publication of publications) {
-    await createTask(publication);
-    console.log(`Created harvesting task for <${publication}>`);
+  for (let page of pages) {
+    await createTask(page);
+    console.log(`Created harvesting task for <${page}>`);
   }
   console.log("FINISHED creation of harvesting tasks")
 }

@@ -19,11 +19,11 @@ services:
 
 ### initiator.json
 
-contains the list of publications urls that need to be processed:
+contains the list of pages urls that need to be processed:
 
 ```
 {
-  "publications": [
+  "pages": [
     "https://example.be/publication"
   ]
 }
