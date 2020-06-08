@@ -2,6 +2,9 @@ import fs from 'fs-extra';
 import {uuid, sparqlEscapeUri, sparqlEscapeString, sparqlEscapeDateTime} from 'mu';
 import {updateSudo as update} from '@lblod/mu-auth-sudo';
 
+
+const HARVESTING_GRAPH = process.env.HARVESTING_GRAPH || 'http://mu.semte.ch/graphs/harvesting';
+
 const CREATOR = 'http://lblod.data.gift/services/harvesting-initiation-service';
 
 const TASK_URI_BASE = 'http://data.lblod.info/id/harvesting-task/';
@@ -46,7 +49,7 @@ export async function createTask(location) {
   await update(`
   ${PREFIXES}
   INSERT DATA {
-    GRAPH <http://mu.semte.ch/graphs/public> {
+    GRAPH ${sparqlEscapeUri(HARVESTING_GRAPH)} {
     
         ${sparqlEscapeUri(taskURI)} a harvesting:HarvestingTask;
                                mu:uuid ${sparqlEscapeString(taskUUID)};

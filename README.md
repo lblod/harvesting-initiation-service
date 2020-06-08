@@ -31,8 +31,10 @@ contains the list of pages urls that need to be processed:
 
 ### Environment variables
 
- - INITIATE_HARVEST_CRON_PATTERN: cron pattern to configure the frequency of the cron job. 
+ - **INITIATE_HARVEST_CRON_PATTERN**: cron pattern to configure the frequency of the cron job. 
    The pattern follows the format as specified in node-cron. Defaults to 0 0 */2 * * *, run every 2 hours.
+ - **HARVESTING_GRAPH**: graph where all the triples/data in connection with the harvesting-task(s) will reside. 
+   Defaults to <http://mu.semte.ch/graphs/harvesting>.
    
 ## REST API
 
