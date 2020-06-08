@@ -31,8 +31,13 @@ async function initiateHarvest() {
   const pages = await getPagesToHarvest();
   console.log('START creation of harvesting tasks');
   for (let page of pages) {
-    await createTask(page);
-    console.log(`Created harvesting task for <${page}>`);
+    try {
+      await createTask(page);
+      console.log(`Created harvesting task for <${page}>`);
+    }catch (e){
+      console.log(`WARNING: something went wrong while initiating the harvesting-task for <${page}>.`);
+      console.error(e);
+    }
   }
   console.log("FINISHED creation of harvesting tasks")
 }
