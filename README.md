@@ -42,9 +42,9 @@ contains the list of pages urls that need to be processed:
 
 Initiate a new harvest asynchronously.
 
-Returns 202 Accepted if the harvesting started successfully.
+Returns `202 Accepted` if the harvesting started successfully.
 
-Returns 400 Bad Request if something went wrong.
+Returns `500 Bad Request` if something went unexpected went wrong while initiating the harvest.
 
 ## Model
 

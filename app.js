@@ -22,7 +22,7 @@ app.post('/initiate-harvest', async function (req, res) {
   } catch (e) {
     console.log('WARNING: something went wrong while initiating the harvest.');
     console.error(e);
-    res.status(400).send(e.message).end();
+    res.status(500).send(e.message).end();
   }
 
 });
