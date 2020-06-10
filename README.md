@@ -100,12 +100,6 @@ The service will create the harvesting collection that will contain the resource
 status | `adms:status` | `adms:Status`| Status of the task, initially set to `http://lblod.data.gift/collecting-statuses/not-started`
 remoteDataObject | `dct:hasPart` | `nfo:RemoteDataObject` | page/resource to be downloaded/collected for this harvesting task
 
-### Collecting statuses
-
-The status of the task will be updated by other micro-services to reflect the progress of the collecting progress. The following statuses are known:
-
-- http://lblod.data.gift/collecting-statuses/not-started
-
 ## RemoteDataObject
 
 The service will create an initial remote-data-object for source URL which will be downloaded by the download-url-service.

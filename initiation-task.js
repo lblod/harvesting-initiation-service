@@ -11,7 +11,6 @@ const TASK_URI_BASE = 'http://data.lblod.info/id/harvesting-task/';
 const TASK_READY_STATUS = 'http://lblod.data.gift/harvesting-statuses/ready-for-collecting';
 
 const COLLECTION_URI_BASE = 'http://data.lblod.info/id/harvesting-collection/';
-const COLLECTION_NOT_STARTED_STATUS = 'http://lblod.data.gift/collecting-statuses/not-started';
 
 const REMOTE_URI_BASE = 'http://data.lblod.info/id/remote-data-objects/';
 const REMOTE_READY_STATUS = 'http://lblod.data.gift/file-download-statuses/ready-to-be-cached';
@@ -62,7 +61,6 @@ export async function createTask(location) {
         ${sparqlEscapeUri(collectionURI)} a harvesting:HarvestingCollection;
                                mu:uuid ${sparqlEscapeString(collectionUUID)};
                                dct:creator ${sparqlEscapeUri(CREATOR)};
-                               adms:status ${sparqlEscapeUri(COLLECTION_NOT_STARTED_STATUS)};
                                dct:hasPart ${sparqlEscapeUri(remoteURI)} .
                                
         ${sparqlEscapeUri(remoteURI)} a nfo:RemoteDataObject, nfo:FileDataObject;
