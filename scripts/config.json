@@ -1,0 +1,41 @@
+{
+  "version": "0.1",
+  "scripts": [
+    {
+      "documentation": {
+        "command": "harvest",
+        "description": "Starts the harvesting process",
+        "arguments": []
+      },
+      "environment": {
+        "image": "tutum/curl",
+        "script": "harvest.sh",
+        "join_networks": true
+      },
+      "mounts": {
+        "app": "/data/app/"
+      }
+    },
+    {
+      "documentation": {
+        "command": "file",
+        "description": "Imports the files in /data/toImport (WIP)",
+        "arguments": []
+      },
+      "environment": {
+        "image": "tutum/curl",
+        "script": "file.sh",
+        "join_networks": true
+      },
+      "mounts": {
+        "app": "/data/app/"
+      }
+    }
+  ],
+  "install": [
+    {
+      "type": "mu-cli",
+      "source": "install/"
+    }
+  ]
+}

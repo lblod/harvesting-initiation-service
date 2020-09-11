@@ -27,6 +27,7 @@ const PREFIXES = `
   PREFIX http: <http://www.w3.org/2011/http#>
   PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
   PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+  PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
 `;
 
 export async function createTask(location) {
@@ -44,6 +45,7 @@ export async function createTask(location) {
   // Remote properties
   const remoteUUID = uuid();
   const remoteURI = `${REMOTE_URI_BASE}${remoteUUID}`;
+  const graphUri = `http://mu.semte.ch/graphs/harvesting/${uuid()}`
 
   await update(`
   ${PREFIXES}
@@ -56,7 +58,8 @@ export async function createTask(location) {
                                adms:status ${sparqlEscapeUri(TASK_READY_STATUS)};
                                dct:created ${sparqlEscapeDateTime(timestamp)};
                                dct:modified ${sparqlEscapeDateTime(timestamp)};
-                               prov:generated ${sparqlEscapeUri(collectionURI)}.
+                               prov:generated ${sparqlEscapeUri(collectionURI)};
+                               ext:graph ${sparqlEscapeUri(graphUri)}.
                                
         ${sparqlEscapeUri(collectionURI)} a harvesting:HarvestingCollection;
                                mu:uuid ${sparqlEscapeString(collectionUUID)};
