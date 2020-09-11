@@ -19,7 +19,7 @@
     {
       "documentation": {
         "command": "file",
-        "description": "Imports the files in /data/toImport",
+        "description": "Imports the files in /data/toImport (WIP)",
         "arguments": []
       },
       "environment": {
